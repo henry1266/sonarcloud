@@ -1,0 +1,26 @@
+{
+  "name": "sonarcloud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henry1266/sonarcloud.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/henry1266/sonarcloud/issues"
+  },
+  "homepage": "https://github.com/henry1266/sonarcloud#readme",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "chalk": "^4.1.2",
+    "commander": "^14.0.0",
+    "dotenv": "^16.5.0"
+  }
+}
