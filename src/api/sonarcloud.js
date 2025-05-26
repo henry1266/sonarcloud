@@ -93,15 +93,52 @@ class SonarCloudAPI {
    */
   async getIssues(projectKey, options = {}) {
     try {
-      const params = {
-        componentKeys: projectKey,
-        organization: this.organization,
-        ...options
-      };
+      // 設定預設分頁大小
+      const pageSize = options.pageSize || 100;
+      let allIssues = [];
+      let page = 1;
+      let totalIssues = 0;
+      let fetchedIssues = 0;
       
-      const response = await this.client.get('/issues/search', { params });
+      console.log('開始分頁獲取問題清單...');
       
-      return response.data.issues;
+      do {
+        const params = {
+          componentKeys: projectKey,
+          organization: this.organization,
+          p: page,
+          ps: pageSize,
+          ...options
+        };
+        
+        // 移除可能重複的分頁參數
+        delete params.pageSize;
+        
+        console.log(`獲取第 ${page} 頁問題清單 (每頁 ${pageSize} 筆)...`);
+        const response = await this.client.get('/issues/search', { params });
+        
+        const issues = response.data.issues || [];
+        allIssues = allIssues.concat(issues);
+        
+        // 第一次請求時獲取總數
+        if (page === 1) {
+          totalIssues = response.data.total || 0;
+          console.log(`問題總數: ${totalIssues}`);
+        }
+        
+        fetchedIssues += issues.length;
+        console.log(`已獲取 ${fetchedIssues}/${totalIssues} 筆問題`);
+        
+        // 如果沒有更多資料或已獲取所有資料，則結束迴圈
+        if (issues.length < pageSize || fetchedIssues >= totalIssues) {
+          break;
+        }
+        
+        page++;
+      } while (true);
+      
+      console.log(`問題清單獲取完成，共 ${allIssues.length} 筆問題`);
+      return allIssues;
     } catch (error) {
       this._handleError(error, '獲取專案問題清單失敗');
     }
