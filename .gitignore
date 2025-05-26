@@ -12,6 +12,7 @@ npm-debug.log*
 # 執行時產生的檔案
 dist/
 build/
+output/
 
 # 本地設定檔
 .DS_Store
