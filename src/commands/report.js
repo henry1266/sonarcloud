@@ -156,7 +156,7 @@ function generateDetailedReport(data) {
         message: issue.message,
         severity: issue.severity,
         type: issue.type,
-        component: issue.component
+        component: issue.component.replace('henry1266_pharmacy-pos:', '')
       })) : []
     },
     coverage: {
@@ -192,7 +192,7 @@ function generateIssuesReport(data) {
     groups[severity].push({
       key: issue.key,
       message: issue.message,
-      component: issue.component,
+      component: issue.component.replace('henry1266_pharmacy-pos:', ''),
       line: issue.line,
       type: issue.type,
       creationDate: issue.creationDate
