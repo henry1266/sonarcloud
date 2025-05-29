@@ -44,7 +44,6 @@ async function fetchOpenIssues() {
 
       // === ↓↓↓↓↓ 只保留精簡欄位 ↓↓↓↓↓ ===
       const simplifiedIssues = sortedIssues.map(issue => ({
-        key: issue.key,
         component: issue.component,
         line: issue.line,
         message: issue.message,
